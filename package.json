@@ -17,9 +17,9 @@
   ],
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch",
-    "dev:publish": "yalc publish",
-    "dev:publish-watch": "node node_modules/chokidar-cli/index.js 'dist/**/*' -c 'npm run dev:publish'"
+    "build:watch": "tsup --watch",
+    "build:publish": "yalc publish",
+    "build:publish-watch": "node node_modules/chokidar-cli/index.js 'dist/**/*' -c 'npm run build:publish'"
   },
   "keywords": [],
   "author": "",
