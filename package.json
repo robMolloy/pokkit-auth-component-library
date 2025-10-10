@@ -1,41 +1,20 @@
 {
   "name": "pokkit-auth-component-library",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
+  "private": true,
   "scripts": {
-    "build": "tsup",
-    "build:watch": "tsup --watch",
-    "publish-build": "yalc publish && yalc push",
-    "publish-build:watch": "node node_modules/chokidar-cli/index.js 'dist/**/*' -c 'npm run publish-build'"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types"
   },
   "devDependencies": {
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "chokidar": "^4.0.3",
-    "chokidar-cli": "^3.0.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.0.0"
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.8",
+    "typescript": "5.9.2"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18"
   }
 }
