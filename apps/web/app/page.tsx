@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@workspace/ui/components/select";
+import { MyComponent } from "@workspace/ui/components/MyComponent";
 
 export default function Page() {
   return (
@@ -30,6 +31,7 @@ export default function Page() {
             </SelectGroup>
           </SelectContent>
         </Select>
+        <MyComponent />
       </div>
     </div>
   );
