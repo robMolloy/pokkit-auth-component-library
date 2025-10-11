@@ -1,4 +1,4 @@
-import { add } from "@repo/math/add";
+import { add } from "@repo/math";
 import styles from "./page.module.css";
 
 export default function Home() {
