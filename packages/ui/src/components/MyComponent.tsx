@@ -1,3 +1,5 @@
+import { Button } from "./button.tsx";
+
 export const MyComponent = () => {
-  return <div>MyComponent & </div>;
+  return <Button variant="destructive">asd</Button>;
 };
