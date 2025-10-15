@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "tsc": "node_modules/.bin/tsc --noemit --watch",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
