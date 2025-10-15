@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "tsc": "node_modules/.bin/tsc --noemit --watch",
+    "tsc:fromRoot": "cd ../.. && tsc --noemit --watch --project ./apps/web",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

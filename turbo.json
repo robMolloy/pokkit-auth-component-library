@@ -20,6 +20,10 @@
     "tsc": {
       "cache": false,
       "persistent": true
+    },
+    "tsc:fromRoot": {
+      "cache": false,
+      "persistent": true
     }
   }
 }
