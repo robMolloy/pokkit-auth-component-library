@@ -5,7 +5,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@workspace/ui/components/tabs";
-import { Link } from "@workspace/ui/custom/Link";
 import { SimpleCard } from "@workspace/ui/custom/SimpleCard";
 import { AuthMethodsList } from "pocketbase";
 
@@ -16,6 +15,7 @@ export const AuthNavigationForm = (p: {
   onNavigateToPasswordSignInClick: () => void;
   onNavigateToOAuth2SignUpClick: () => void;
   onNavigateToPasswordSignUpClick: () => void;
+  onNavigateToPasswordResetClick: () => void;
 }) => {
   return (
     <SimpleCard
@@ -58,12 +58,13 @@ export const AuthNavigationForm = (p: {
                 Sign in with email and password
               </Button>
             )}
-            <Link
+            <Button
               className="text-sm text-muted-foreground"
-              href="/auth/request-password-reset"
+              onClick={() => p.onNavigateToPasswordResetClick()}
+              variant="outline"
             >
               Forgot your password?
-            </Link>
+            </Button>
           </div>
         </TabsContent>
         <TabsContent value="signup" className="pt-2">
