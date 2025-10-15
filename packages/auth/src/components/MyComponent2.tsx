@@ -1,3 +1,5 @@
+import { Button } from "@workspace/ui/components/button";
+
 export const MyComponent2 = () => {
-  return <button>MyComponent2</button>;
+  return <Button>MyComponent2</Button>;
 };
