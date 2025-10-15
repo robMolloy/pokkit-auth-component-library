@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@workspace/ui/components/select";
 import { MyComponent } from "@workspace/ui/components/MyComponent";
+import { MyComponent2 } from "@workspace/auth/components/MyComponent2";
 
 export default function Page() {
   return (
@@ -32,6 +33,7 @@ export default function Page() {
           </SelectContent>
         </Select>
         <MyComponent />
+        <MyComponent2 />
       </div>
     </div>
   );
