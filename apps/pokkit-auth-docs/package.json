@@ -7,7 +7,7 @@
     "tsc": "node_modules/.bin/tsc --noemit --watch",
     "tsc:fromRoot": "cd ../.. && tsc --noemit --watch --project ./apps/pokkit-auth-docs",
     "start": "docusaurus start",
-    "dev": "docusaurus start --port 3002 --no-open",
+    "dev": "docusaurus start --port 2999 --no-open",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",

@@ -1,0 +1,17 @@
+{
+  "name": "pocketbase-instance",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "kill-port": "kill -9 $(lsof -i:${PORT:?} -t | head -n 1)",
+    "kill:db": "PORT=8090 npm run kill-port",
+    "dev": "./pocketbase serve --http=\"0.0.0.0:8090\"",
+    "db:create-backup": "pocketbase-leader/scripts/create-backup.mjs",
+    "db:replace-seed": "pocketbase-leader/scripts/replace-seed.mjs",
+    "db:restore-seed": "pocketbase-leader/scripts/restore-seed.mjs"
+  },
+  "dependencies": {
+    "pocketbase": "^0.25.2"
+  },
+  "devDependencies": {}
+}

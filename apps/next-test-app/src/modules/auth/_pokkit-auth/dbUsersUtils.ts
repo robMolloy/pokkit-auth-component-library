@@ -1,0 +1,104 @@
+import PocketBase, { RecordModel, RecordSubscription } from "pocketbase";
+import { TUser, userSchema, usersCollectionName } from "./pokkitAuthUtils";
+
+export const listUsers = async (p: { pb: PocketBase }) => {
+  try {
+    const initData = await p.pb.collection(usersCollectionName).getFullList();
+
+    const data = initData
+      .map((x) => userSchema.safeParse(x))
+      .filter((x) => x.success)
+      .map((x) => x.data);
+    return { success: true, data } as const;
+  } catch (error) {
+    return { success: false, error } as const;
+  }
+};
+
+export const subscribeToUsers = async (p: {
+  pb: PocketBase;
+  onCreateUser: (e: RecordSubscription<RecordModel>) => void;
+  onUpdateUser: (e: RecordSubscription<RecordModel>) => void;
+}) => {
+  p.pb.collection(usersCollectionName).subscribe("*", (e) => {
+    if (e.action) p.onCreateUser(e);
+  });
+  return { success: true } as const;
+};
+
+export const getUser = async (p: { pb: PocketBase; id: string }) => {
+  try {
+    const userResp = await p.pb.collection(usersCollectionName).getOne(p.id);
+    return userSchema.safeParse(userResp);
+  } catch (e) {
+    const error = e as { message: string };
+    return { success: false, error } as const;
+  }
+};
+export const subscribeToUser = async (p: {
+  pb: PocketBase;
+  id: string;
+  onChange: (e: TUser | null) => void;
+}) => {
+  try {
+    const unsubPromise = p.pb.collection(usersCollectionName).subscribe(p.id, (e) => {
+      const parseResp = userSchema.safeParse(e.record);
+      p.onChange(parseResp.success ? parseResp.data : null);
+    });
+    const userRespPromise = getUser(p);
+
+    // subscription must be complete to avoid any race conditions issues
+    // avoid using promises.all to be explicit
+    const unsub = await unsubPromise;
+    const userResp = await userRespPromise;
+
+    p.onChange(userResp.success ? userResp.data : null);
+
+    return { success: true, data: unsub } as const;
+  } catch (error) {
+    p.onChange(null);
+    return { success: false, error } as const;
+  }
+};
+
+export const smartSubscribeToUsers = async (p: {
+  pb: PocketBase;
+  onChange: (x: TUser[]) => void;
+}) => {
+  const listUsersResp = await listUsers(p);
+  if (!listUsersResp.success) return listUsersResp;
+
+  let allDocs = listUsersResp.data;
+  p.onChange(allDocs);
+  const unsub = p.pb.collection(usersCollectionName).subscribe("*", (e) => {
+    if (e.action === "create") {
+      const parseResp = userSchema.safeParse(e.record);
+      if (parseResp.success) allDocs.push(parseResp.data);
+    }
+    if (e.action === "update") {
+      const parseResp = userSchema.safeParse(e.record);
+      if (!parseResp.success) return;
+
+      allDocs = allDocs.filter((x) => parseResp.data?.id !== x.id);
+      allDocs.push(parseResp.data);
+    }
+    if (e.action === "delete") {
+      const parseResp = userSchema.safeParse(e.record);
+      if (!parseResp.success) return;
+
+      allDocs = allDocs.filter((x) => parseResp.data?.id !== x.id);
+    }
+    p.onChange(allDocs);
+  });
+
+  return { success: true, data: unsub } as const;
+};
+
+export const deleteUser = async (p: { pb: PocketBase; id: string }) => {
+  try {
+    await p.pb.collection(usersCollectionName).delete(p.id);
+    return { success: true } as const;
+  } catch (error) {
+    return { success: false, error } as const;
+  }
+};
